@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Jokenpô Pro - JS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Pedra, Papel e Tesoura</h1>
+        
+        <div class="placar">
+            <div class="player">
+                <p>Jogador 1</p>
+                <span id="vitoriasP1">0</span>
+            </div>
+            <div class="total">
+                <p>Partidas</p>
+                <span id="totalPartidas">0</span>
+            </div>
+            <div class="player">
+                <p>Jogador 2</p>
+                <span id="vitoriasP2">0</span>
+            </div>
+        </div>
+
+        <div class="controles">
+            <p id="status">Escolha uma opção para começar!</p>
+            <div class="botoes">
+                <button onclick="jogar(1)">🪨 Pedra</button>
+                <button onclick="jogar(2)">📄 Papel</button>
+                <button onclick="jogar(3)">✂️ Tesoura</button>
+            </div>
+            <button id="btnSair" onclick="encerrarJogo()">Encerrar Jogo (Flag)</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
