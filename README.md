@@ -48,7 +48,7 @@ Projeto_-22042026/
 ## Informações do Autor
 - **Autor:** SaMueLHsLie2D
 - **Data:** 22 de Abril de 2026
-- **Disciplina:** Usabilidade e Desenvolvimento Web
+- **Uc:** Usabilidade, Desenvolvimento Web, mobile e jogos.
 
 ## Licença
 Este projeto está licenciado sob a MIT License.
