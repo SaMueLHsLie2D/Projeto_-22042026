@@ -1,52 +1,68 @@
 // --- VARIÁVEIS GLOBAIS ---
-let jogoAtivo = true; // FLAG: Enquanto true, o jogo aceita cliques
+let jogoAtivo = true; // FLAG: Controla se o jogo está processando jogadas
 
-// CONTADORAS
+// CONTADORAS: Registram vitórias individuais
 let contP1 = 0;
-let contP2 = 0;
+let contCPU = 0;
 
-// ACUMULADORA
+// ACUMULADORA: Soma o total de rodadas jogadas
 let acumPartidas = 0;
 
 function jogar(escolhaP1) {
+    // Verificação da FLAG
     if (!jogoAtivo) {
-        alert("O jogo está encerrado! Recarregue para jogar novamente.");
+        alert("O jogo está encerrado! Clique em 'Reiniciar' para jogar de novo.");
         return;
     }
 
-    // Solicitação da Escolha do Jogador 2
-    let escolhaP2 = parseInt(prompt("Jogador 2:\n1-Pedra\n2-Papel\n3-Tesoura"));
-
-    if (escolhaP2 === 4) {
-        encerrarJogo();
-        return;
-    }
-
+    // --- Lógica da CPU (Automática) ---
+    // Math.random() gera entre 0 e 1. 
+    // Multiplicamos por 3 e arredondamos para cima para ter 1, 2 ou 3.
+    let escolhaCPU = Math.floor(Math.random() * 3) + 1;
+    
+    const nomesOpcoes = { 1: "Pedra", 2: "Papel", 3: "Tesoura" };
     const statusTxt = document.getElementById("status");
 
-    // Lógica de Comparação
-    if (escolhaP1 === escolhaP2) {
-        statusTxt.innerText = "Empate na rodada!";
-    } else if (
-        (escolha1 === 1 && escolha2 === 3) ||
-        (escolha1 === 2 && escolha2 === 1) ||
-        (escolha1 === 3 && escolha2 === 2)
+    // --- Processamento do Vencedor ---
+    if (escolhaP1 === escolhaCPU) {
+        statusTxt.innerText = `Empate! Ambos escolheram ${nomesOpcoes[escolhaP1]}`;
+    } 
+    else if (
+        (escolhaP1 === 1 && escolhaCPU === 3) || // Pedra vence Tesoura
+        (escolhaP1 === 2 && escolhaCPU === 1) || // Papel vence Pedra
+        (escolhaP1 === 3 && escolhaCPU === 2)    // Tesoura vence Papel
     ) {
-        statusTxt.innerText = "Jogador 1 venceu a rodada!";
-        contP1++; // Incremento da Contadora
+        statusTxt.innerHTML = `<span style="color: #2ecc71">Você venceu!</span> A CPU escolheu ${nomesOpcoes[escolhaCPU]}`;
+        contP1++; // Incremento da Contadora P1
         document.getElementById("vitoriasP1").innerText = contP1;
-    } else {
-        statusTxt.innerText = "Jogador 2 venceu a rodada!";
-        contP2++; // Incremento da Contadora
-        document.getElementById("vitoriasP2").innerText = contP2;
+    } 
+    else {
+        statusTxt.innerHTML = `<span style="color: #e74c3c">CPU venceu!</span> Ela escolheu ${nomesOpcoes[escolhaCPU]}`;
+        contCPU++; // Incremento da Contadora CPU
+        document.getElementById("vitoriasP2").innerText = contCPU;
     }
 
-    acumPartidas++; // Incremento da Acumuladora
+    // Atualização da ACUMULADORA
+    acumPartidas += 1; 
     document.getElementById("totalPartidas").innerText = acumPartidas;
 }
 
 function encerrarJogo() {
-    jogoAtivo = false; // Alterando a FLAG
-    document.getElementById("status").innerText = "JOGO FINALIZADO!";
-    alert(`Resultado Final:\nPartidas: ${acumPartidas}\nP1: ${contP1}\nP2: ${contP2}`);
+    jogoAtivo = false; // Acionando a FLAG de parada
+    document.getElementById("status").innerText = "Sessão Finalizada!";
+    
+    // Pequeno resumo usando as variáveis acumuladora e contadoras
+    alert(`Estatísticas da Sessão:\nTotal de Rodadas: ${acumPartidas}\nSuas Vitórias: ${contP1}\nVitórias CPU: ${contCPU}`);
+}
+
+// Opcional: Função para resetar e voltar a FLAG para true
+function reiniciar() {
+    contP1 = 0;
+    contCPU = 0;
+    acumPartidas = 0;
+    jogoAtivo = true;
+    document.getElementById("vitoriasP1").innerText = "0";
+    document.getElementById("vitoriasP2").innerText = "0";
+    document.getElementById("totalPartidas").innerText = "0";
+    document.getElementById("status").innerText = "Escolha uma opção para começar!";
 }
